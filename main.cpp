@@ -63,7 +63,7 @@ HANDLE GetTrustedInstallerToken() {
 			break;
 		}
 
-		//LogonUserExExW will fail if we don't replace the mandatory label with trusted installer sid, didn't bother looking into why.
+		//LogonUserExExW will fail if we don't replace the mandatory label with the trusted installer sid, didn't bother looking into why.
 		//The new token has the proper mandatory label anyways after we create it
 		token_groups->Groups[token_groups->GroupCount - 1].Sid = trusted_installer_sid;
 		token_groups->Groups[token_groups->GroupCount - 1].Attributes = SE_GROUP_OWNER | SE_GROUP_ENABLED;
@@ -163,7 +163,7 @@ void ResolveDynamicFunctions()
 
 void TestToken(HANDLE token) {
 
-	//This POC demonstrates the new permissions it by kicking off a new command prompt that has trusted installer group in it's token
+	//This POC demonstrates the new permissions by kicking off a command prompt with the new token
 
 	STARTUPINFOW si = { 0 };
 	si.cb = sizeof(si);
